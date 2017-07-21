@@ -85,32 +85,32 @@ let formData = [
 // HINTS:
 // As you can see, we access the first element in the array
 // with [0] and then grab the property "label" using the "." operator
-;(function() {
-  // Select the first element from the array
-  let first = formData[0]
-  // Log the first object
-  console.log(first)
-  // Log the string "First Name"
-  console.log(first.label)
-})()
 
 // -------- Your Code Goes Below this Line --------
-
-let parent = document.querySelector("#fields")
-
-let language = ["English", "French", "Spanish", "Chinese", "Japanese"]
-let createInput = document.createElement("select")
-
-for (var i = 0; i < language.length; i++) {
-  const options = document.createElement("options")
-  options.textcontent = language[i]
-  parent.appendChild(createInput)
-}
+let fields = document.getElementById("fields")
 
 for (var i = 0; i < formData.length; i++) {
-  createInput = document.createElement("input")
-  createInput.type = formData[i]["type"]
-  createInput.placeholder = formData[i]["label"]
-  createInput.id = formData[i]["id"]
-  parent.appendChild(createInput)
+  // setting the loop
+  if (formData[i].type === "textarea") {
+    /// checking for textarea "input"
+    let textarea = document.createElement("textarea") // creating textarea
+    textarea.id = formData[i].id // giving textarea an id
+    textarea.placeholder = formData[i].label // giving textarea a placeholder
+    fields.appendChild(textarea) // adding the text area we created to the page (DOM)
+  } else if (formData[i].type === "select") {
+    let select = document.createElement("select")
+    select.id = formData[i].id
+    for (var j = 0; j < formData[i].options.length; j++) {
+      let option = document.createElement("option")
+      option.textContent = formData[i].options[j].label
+      select.appendChild(option)
+    }
+    fields.appendChild(select)
+  } else {
+    let input = document.createElement("input")
+    input.id = formData[i].id
+    input.type = formData[i].type
+    input.placeholder = formData[i].label
+    fields.appendChild(input)
+  }
 }
